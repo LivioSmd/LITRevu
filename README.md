@@ -41,7 +41,7 @@ http://127.0.0.1:8000/
 - S'abonner et se désabonner d'autres utilisateurs.
 
 - ### Utilisation de l'application :
-L'Utilisateur peut s'inscrire/se connecter, voir ces postes depuis ça page 'posts', voir ses potes et les postes des utilisateurs qu'ils suit ou qui ont repondu a ses billets depuis la page flux, il peut gerer ses abonnement depuis sa page 'abonnement', il peut aussi modifier ses billets et critiques.
+L'Utilisateur peut s'inscrire/se connecter, voir ses postes depuis la page 'posts', voir ses postes et les postes des utilisateurs qu'il suit ou qui ont repondu à ses billets depuis la page 'flux', il peut gérer ses abonnements depuis la page 'abonnement', il peut aussi modifier ses billets et critiques.
 
 ## Information complémentaire :
 - Le corps de l'application ce situe dans le dossier App
