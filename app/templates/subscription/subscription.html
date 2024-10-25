@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Subscription Page{% endblock %}
+
+{% block content %}
+<section class="subscription-content">
+    <h2 class="title-height">Suivre d'autres utilisateurs</h2>
+    <form method="get" action="" class="user_search_form">
+        {{ form_search.as_p }}
+        <button class="btn-base search_button" type="submit">Rechercher</button>
+    </form>
+    {% if search_users %}
+        {% for user in search_users %}
+            <h1>Utilisateur trouvé : {{ user }} !</h1>
+            {% if request.user.is_authenticated %}
+                <form method="post" action="{% url 'subscription' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    {% if not user in request.user.profile.get_subscriptions %}
+                        <button type="submit" class="btn-base subscribe_button">S'abonner</button>
+                    {% endif %}
+                </form>
+            {% endif %}
+        {% endfor %}
+    {% elif search_users is not None  %}
+        <h1>Aucun utilisateur ne porte ce nom</h1>
+    {% endif %}
+    <h2 class="title-height">Abonnements</h2>
+    <div class="subscriptions-subscribers-container">
+        {% for user in user_profile.get_subscriptions %}
+            <div class="subscriptions-subscribers-content">
+                <div class="subscriptions-list {% if forloop.first %}first-of-list{% endif %}">
+                        {{ user }}
+                </div>
+                <form method="post" action="{% url 'subscription' %}" class="unsubscribe_form">
+                    {% csrf_token %}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <button type="submit" class="unsubscribe {% if forloop.first %}unsubscribe-first-of-list{% endif %}">Désabonner</button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+    <h2 class="title-height">Abonnés</h2>
+        {% for user in user_profile.get_subscribers %}
+            <div class="subscriptions-subscribers-content">
+                {% if forloop.first %}
+                    <div class="subscribers-list first-of-list">
+                        {{ user }}
+                    </div>
+                {% else %}
+                    <div class="subscribers-list">
+                        {{ user }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+</section>
+<link rel="stylesheet" href="{% static 'subscription.css' %}">
+{% endblock %}
+

@@ -1,0 +1,67 @@
+.modify-critique-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    padding-bottom: 10%;
+}
+
+.modify-critique-form {
+    border: 1px solid black;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    margin-top: 20px;
+}
+
+p:nth-of-type(2) {
+    margin-bottom: 0px;
+}
+
+.modify-submit-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 95%;
+}
+
+.submit-button {
+    margin-right: 0px;
+}
+
+.modify-critique-ticket {
+    width: 80%;
+}
+
+.ticket-image {
+    margin-bottom: 10px;
+    margin-left: 6px;
+}
+
+.ticket-date-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ticket-date {
+    margin: 0px 20px 0px 0px;
+    font-size: 13px;
+    width: auto;
+}
+
+.message-request-ticket {
+    margin: 0;
+}
+
+.ticket-title,
+.ticket-description {
+    margin-top: 10px !important;
+} 
+
+.modify_critique_info {
+    margin-top: 5px;
+}

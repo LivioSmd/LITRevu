@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Ticket Critique Page{% endblock %}
+
+{% block content %}
+<section class="ticket-critique-content">
+    {% if messages %}
+        {% for message in messages %}
+            <h2 class="title-height">
+                {{ message }}
+            </h2>
+        {% endfor %}
+    {% else %}
+        <h2 class="title-height">Créer une critique</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="response-ticket-container">
+                <div class="width">
+                    <p>Vous êtes en train de poster en réponse à</p>
+                </div>
+                <div class="response-ticket-content">
+                    <div class="ticket-date-container">
+                        <p class="ticket-date response-ticket-date">{{ ticket.time_created|date:"H:i, d F Y " }}</p>
+                    </div>
+                    <p>{{ ticket.user }} a demandé une critique</p>
+                    <p class="ticket-title">{{ ticket.title }}</p>
+                    <p class="ticket-description">{{ ticket.description }}</p>
+                    <div class="img-container">
+                            <img src="{{ ticket.image.url }}" alt="Image du ticket" class="ticket-image">
+                    </div>
+                </div>
+            </div>
+            <div class="critique-container ticket-critique-container">
+                <p>Critique</p>
+                <div class="critique-form ticket-critique-form">
+                    {{ critique_form.as_p }}
+                </div>
+            </div>
+            <div class="submit-container">
+                <button  class="submit-button" type="submit">Envoyer</button>
+            </div>
+        </form>
+    {% endif %}
+</section>
+<link rel="stylesheet" href="{% static 'ticket_critique.css' %}">
+<link rel="stylesheet" href="{% static 'ticket_critique_detail.css' %}">
+<link rel="stylesheet" href="{% static 'critique.css' %}">
+{% endblock %}
+

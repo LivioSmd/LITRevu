@@ -1,0 +1,95 @@
+.subscription-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    padding-bottom: 10%;
+}
+
+.title-height {
+    margin: 40px;
+}
+
+.subscriptions-list{
+    border: 1px solid black;
+    border-top: 0px;
+    width: 70%;
+    padding: 5px;
+}
+
+.subscribers-list{
+    border: 1px solid black;
+    border-top: 0px;
+    width: 80%;
+    padding: 5px;
+}
+
+.first-of-list{
+    border-top: 1px solid black;
+}
+
+.subscriptions-subscribers-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subscriptions-subscribers-content{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.unsubscribe {
+    background: white;
+    border: 1px solid black;
+    border-left: 0px;
+    border-top: 0px;
+    cursor: pointer;
+}
+
+.unsubscribe-first-of-list {
+    border-top: 1px solid black;
+}
+
+#id_username {
+    border: 1px solid black;
+    padding: 7px;
+    text-align: center;
+    height: 40px;
+    width: 90%;
+}
+
+.user_search_form {
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.user_search_form p {
+    width: 100%;
+}
+
+.search_button {
+  height: 28px;
+  width: 13%;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.unsubscribe_form{
+    display: flex;
+    margin: 0;
+}
+
+.subscribe_button {
+    height: 30px;
+    width: 80px;
+    border-radius: 7px;
+    cursor: pointer;
+}

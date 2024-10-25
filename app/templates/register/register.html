@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Register Page{% endblock %}
+
+{% block content %}
+<section class="register-content">
+    {% if form.errors %}
+        <p>There was an error with your form...</p>
+    {% endif %}
+
+    <div class="container">
+        <h2>Inscrivez-vous</h2>
+        <form action="{% url 'register' %}" method="POST" class="form-register">
+            {% csrf_token %}
+            <div>
+                <input type="text" name="username" class="input-base input-form-register"
+                       placeholder="Nom d'utilisateur" value="{{ form.username.value|default:'' }}">
+            </div>
+            <div>
+                <input type="password" name="password1" class="input-base input-form-register"
+                       placeholder="Mot de passe">
+            </div>
+            <div>
+                <input type="password" name="password2" class="input-base input-form-register"
+                       placeholder="Confirmer le mot de passe">
+            </div>
+            <div class="btn-register-container">
+                <button class="btn-base btn-form-register" type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</section>
+<link rel="stylesheet" href="{% static 'register.css' %}">
+{% endblock %}
+

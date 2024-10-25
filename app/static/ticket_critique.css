@@ -1,0 +1,124 @@
+.ticket-critique-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    padding-bottom: 10%;
+}
+
+.ticket-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    padding-bottom: 10%;
+}
+
+.title-height {
+    margin: 20px;
+}
+
+.info {
+    margin-bottom: 10px;
+}
+
+p {
+    margin: 0;
+    width: 95%;
+    margin: 10px 0px 10px 0px;
+}
+
+p label {
+    font-size: 17px;
+    font-weight: 300;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+#id_note {
+    border: none !important;
+    width: 92% !important;
+    margin-top: 0 !important;
+    display: flex;
+    gap: 8%;
+}
+
+#id_title, 
+#id_description, 
+#id_note, 
+#id_commentaire,
+#id_critique_title{
+    width: 100%;
+    border: 1px solid black;
+    padding: 7px;
+    margin-top: 10px;
+}
+
+textarea {
+    width: 80%;
+}
+
+form {
+    width: 80%;
+}
+
+#id_image {
+    width: 100%;
+    margin: 10px 0px 20px 0px;
+}
+
+#id_commentaire {
+    margin-bottom: 30px;
+}
+
+.submit-button-container{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.submit-button{
+    background: white;
+    border: 1px black solid;
+    width: 12%;
+    height: 28px;
+    border-radius: 5px;
+    margin: 5px 15px 25px 0px;
+}
+
+.critique-container {
+    border-top: none !important;
+    border-bottom: none !important;
+}
+
+.ticket-critique-container {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1px;
+}
+
+.ticket-critique-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submit-container {
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#id_note p {
+    display: none;
+}

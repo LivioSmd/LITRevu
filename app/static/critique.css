@@ -1,0 +1,25 @@
+.ticket-description {
+    margin-top : 0px
+}
+
+.width {
+    width: 100%;
+}
+
+.response-ticket-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.response-ticket-content {
+    border: 1px solid black;
+    width: 70%;
+    margin: 10px 0px 40px 0px;
+}
+
+.response-ticket-date {
+    width: auto;
+    margin-top: 10px;
+}

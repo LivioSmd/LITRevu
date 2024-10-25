@@ -1,0 +1,38 @@
+.modify-ticket-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    padding-bottom: 10%;
+}
+
+.modify-ticket-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+#image-clear_id,
+div:nth-of-type(3) label:nth-of-type(2),
+.upload-button,
+a {
+    display: none;
+}
+
+p:nth-of-type(3) {
+    gap: 5px;
+    align-items: self-start;
+}
+
+.upload-field{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

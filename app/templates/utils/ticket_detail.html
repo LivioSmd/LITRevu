@@ -1,0 +1,34 @@
+{% load static %}
+
+{% block content %}
+<div class="ticket-detail {% if first %}first-of-list{% endif %}"> <!-- réutilisation de Fisrt pour générer le border-top -->
+    {% if user.profile == ticket.user %}
+        <h5 class="ticket-text">Ticket - Vous</h5>
+    {% else %}
+        <h5>Ticket - {{ ticket.user }}</h5>
+    {% endif %}
+    <div class="ticket-date-container">
+        <p class="ticket-date">{{ ticket.time_created|date:"H:i, d F Y " }}</p>
+    </div>
+    <p class="ticket-title custon-margin">{{ ticket.title }}</p>
+    <p class="ticket-description">{{ ticket.description }}</p>
+    {% if ticket.image %}
+        <div class="img-container">
+            <img src="{{ ticket.image.url }}" alt="Image du ticket" class="ticket-image">
+        </div>
+    {% endif %}
+    <div class="action-button">
+        {% if not flux %}
+            <a href="{% url 'modify_ticket' ticket.id %}" class="btn-active btn-base">Modifier</a>
+            <form method="post" action="{% url 'my_posts' %}" class="btn-active btn-base delete-form">
+                {% csrf_token %}
+                <input type="hidden" name="delete_ticket_id" value="{{ ticket.id }}">
+                <button type="submit" class="delete-btn">Supprimer</button>
+             </form>
+        {% else %}
+            <a href="{% url 'create_critique' ticket.id %}" class="btn-active btn-base">Créer une critique</a>
+        {% endif %}
+    </div>
+</div>
+<link rel="stylesheet" href="{% static 'ticket_critique_detail.css' %}">
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Login Page{% endblock %}
+
+{% block content %}
+<section class="login-content">
+    <div>
+        {% if messages %}
+            <ul class="error-message-ul">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+    <div class="register-login-content">
+        <div class="register-redirection">
+            <h3>Inscrivez-vous maintenant</h3>
+            <a href="{% url 'register' %}" class="btn-base btn-register-login-page">S'inscrire</a>
+        </div>
+        <div class="container">
+            <h3>Connectez-vous</h3>
+            <form action="" method=POST class="form-login">
+                {% csrf_token %}
+                <div>
+                    <input type="text" name="username" class="input-base input-form-login" placeholder="Nom d'utilisateur">
+                </div>
+                <div>
+                    <input type="password" name="password" class="input-base input-form-login" placeholder="Mot de passe">
+                </div>
+                <div class="btn-login-container">
+                    <button class="btn-base btn-action-login-page" type="submit">Se connecter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<link rel="stylesheet" href="{% static 'login.css' %}">
+{% endblock %}
+

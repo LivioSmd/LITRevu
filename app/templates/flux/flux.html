@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Flux Page{% endblock %}
+
+{% block content %}
+<section class="flux-content">
+    <div class="flux-action-btn-container">
+        <a href="{% url 'create_ticket' %}" class="btn-base flux-action-btn">Demander une critique</a>
+        <a href="{% url 'create_ticket_critique' %}" class="btn-base flux-action-btn">Créer une critique</a>
+    </div>
+    <ul>
+        {% for post in posts %}
+            <li>
+                {% if post.content_type == 'TICKET'  %}
+                    {% include 'utils/ticket_detail.html' with ticket=post flux=True%}
+                {% elif post.content_type == 'CRITIQUE' %}
+                    {% include 'utils/critique_detail.html' with critique=post ticket=post.ticket flux=True%}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+<link rel="stylesheet" href="{% static 'flux.css' %}">
+{% endblock %}
+

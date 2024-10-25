@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}My Posts{% endblock %}
+
+{% block content %}
+<section class="my-posts-content">
+    <div class="border-bottom"></div>
+    {% if my_tickets %}
+        <ul>
+        {% for ticket in my_tickets %}
+            <li>
+                {% if forloop.first %}
+                    {% include 'utils/ticket_detail.html' with ticket=ticket %}
+                {% else %}
+                    {% include 'utils/ticket_detail.html' with ticket=ticket %}
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez aucun ticket pour le moment.</p>
+    {% endif %}
+    {% if my_critiques %}
+        <ul>
+        {% for critique in my_critiques %}
+            <li>
+                {% if forloop.first %}
+                    {% include 'utils/critique_detail.html' with critique=critique ticket=critique.ticket %}
+                {% else %}
+                    {% include 'utils/critique_detail.html' with critique=critique ticket=critique.ticket %}
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Vous n'avez aucune critique pour le moment.</p>
+    {% endif %}
+</section>
+<link rel="stylesheet" href="{% static 'my_posts.css' %}">
+{% endblock %}
+

@@ -1,0 +1,19 @@
+{% load static %}
+
+{% block content %}
+<div class="header-container">
+    <div>
+        <h1>LITReview</h1>
+    </div>
+    {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'flux' %}" class="nav-text">Flux</a>
+            <a href="{% url 'my_posts' %}" class="nav-text">Posts</a>
+            <a href="{% url 'subscription' %}" class="nav-text">Abonnements</a>
+            <a href="{% url 'logout' %}" class="nav-text">Se déconnecter</a>
+                {{ user }}
+        </div>
+    {% endif %}
+</div>
+<link rel="stylesheet" href="{% static 'header.css' %}">
+{% endblock %}

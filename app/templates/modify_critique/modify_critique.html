@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Modify Critique Page{% endblock %}
+
+{% block content %}
+<section class="modify-critique-content">
+    <h2>Modifier la Critique</h2>
+    <div class="response-ticket-container modify-critique-ticket">
+        <div class="width">
+            <p class="modify_critique_info">Vous êtes en train de poster en réponse à</p>
+        </div>
+        <div class="response-ticket-content">
+            <div class="ticket-date-container">
+                <p class="ticket-date reponseticket-date">{{ ticket.time_created }}</p>
+            </div>
+            <p class="message-request-ticket">{{ ticket.user }} a demandé une critique</p>
+            <p class="ticket-title">{{ ticket.title }}</p>
+            <p class="ticket-description">{{ ticket.description }}</p>
+            <div class="img-container">
+                <img src="{{ ticket.image.url }}" alt="Image du ticket" class="ticket-image">
+            </div>
+        </div>
+    </div>
+    <form method="POST" enctype="multipart/form-data" class="modify-critique-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="modify-submit-container">
+            <button  class="submit-button" type="submit">Envoyer</button>
+        </div>   
+    </form>
+</section>
+<link rel="stylesheet" href="{% static 'ticket_critique.css' %}">
+<link rel="stylesheet" href="{% static 'modify_critique.css' %}">
+<link rel="stylesheet" href="{% static 'critique.css' %}">
+{% endblock %}

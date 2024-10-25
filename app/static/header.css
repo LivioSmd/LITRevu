@@ -1,0 +1,20 @@
+.header-container {
+    border: 1px black solid;
+    display: flex;
+
+
+    justify-content: space-around;
+    align-items: center;
+}
+
+.header-container div{
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.nav-text{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}

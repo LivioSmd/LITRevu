@@ -1,0 +1,123 @@
+.critique-detail {
+    border: 1px solid black;
+    border-top: 0px;
+}
+
+.ticket-container {
+    display: flex;
+    justify-content: center;
+}
+
+.ticket-detail {
+    border: 1px solid black;
+    border-top: 0px;
+}
+
+.ticket-in-critique {
+    width: 95%;
+    border-top: 1px solid black;
+}
+
+.first-of-list {
+    border-top: 1px solid black;
+}
+
+ul {
+    width: 100%;
+    padding: 0;
+    list-style-type: none; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    width: 60%;
+}
+
+p {
+    font-size: 16px;
+    margin-left: 2px !important;
+}
+
+img {
+    margin-left: 6px;
+}
+
+.critique-date-container,
+.ticket-date-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.critique-date,
+.ticket-date {
+    margin: 0;
+    font-size: 13px;
+}
+
+.ticket-date {
+    margin: 0px 20px 0px 0px;
+}
+
+.critique-date {
+    margin: 0px 20px 0px 0px;
+}
+
+.critique-text {
+    margin: 0;
+}
+
+.critique-commentaire {
+    margin-bottom: 8px;
+    margin-top: 13px;
+}
+
+.action-button {
+    display: flex;
+    justify-content: flex-end;
+    width: 97%;
+    gap: 10px;
+    align-items: center;
+}
+
+.btn-active {
+    padding: 7px;
+    border-radius: 5px;
+    margin: 10px 0px 10px 0px;
+}
+
+.ticket-title {
+    margin-top: 0px;
+}
+
+.delete_ticket_form {
+    margin: 0;
+}
+
+.delete-form {
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.delete-btn {
+    font-size: 15px;
+    background: white;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.ticket-image {
+    margin-bottom: 10px;
+}
+
+.display-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.display-note p{
+    margin: 0;
+}

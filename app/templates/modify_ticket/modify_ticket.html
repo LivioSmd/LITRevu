@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}Modify Ticket Page{% endblock %}
+
+{% block content %}
+<section class="ticket-content">
+    <h2>Modifier le Ticket</h2>
+    <form method="POST" enctype="multipart/form-data" class="modify-ticket-form">
+        {% csrf_token %}
+        <div class="form-field">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+        <div class="form-field">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+        <div class="form-field upload-field">
+            {{ form.image.label_tag }}
+            <div class="img-container">
+                <img src="{{ ticket.image.url }}" alt="Image du ticket" class="ticket-image">
+            </div>
+            <input type="file" name="image" accept="image/*" id="id_image">
+        </div>
+        <div class="submit-button-container">
+            <button class="submit-button" type="submit">Envoyer</button>
+        </div>
+    </form>
+</section>
+<link rel="stylesheet" href="{% static 'ticket.css' %}">
+<link rel="stylesheet" href="{% static 'modify_ticket.css' %}">
+{% endblock %}
+

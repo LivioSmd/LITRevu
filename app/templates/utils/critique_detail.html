@@ -1,0 +1,58 @@
+{% load static %}
+{% load star_tags %}
+
+{% block content %}
+<div class="critique-detail {% if first %}first-of-list{% endif %}"> <!-- réutilisation de Fisrt pour générer le border-top -->
+    {% if user.profile == critique.user %}
+        <h5 class="critique-text">Vous avez publié une critique</h5>
+    {% else %}
+        <h5 class="critique-text">{{ critique.user }} a publié une critique</h5>
+    {% endif %}
+    <div class="critique-date-container">
+        <p class="critique-date">{{ critique.time_created|date:"H:i, d F Y " }}</p>
+    </div>
+    <div class="display-note">
+        <h6>{{ critique.critique_title }}</h6>
+        <span>-</span>
+        {% render_stars critique.note %}
+    </div>
+    <p class="critique-commentaire">{{ critique.commentaire }}</p>
+    <div class="ticket-container">
+        <div class="ticket-detail ticket-in-critique">
+            {% if user.profile == ticket.user %}
+                <p class="ticket-text">Ticket - Vous</p>
+                {% if not flux %}
+                    <div class="ticket-date-container">
+                        <p class="ticket-date">{{ ticket.time_created|date:"H:i, d F Y " }}</p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <p>Ticket - {{ ticket.user }}</p>
+                {% if not flux %}
+                    <div class="ticket-date-container">
+                        <p class="ticket-date">{{ ticket.time_created|date:"H:i, d F Y " }}</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+            <p class="ticket-title">{{ ticket.title }}</p>
+            {% if ticket.image %}
+            <div class="img-container">
+                <img src="{{ ticket.image.url }}" alt="Image du ticket" class="ticket-image">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if not flux %}
+        <div class="action-button">
+            <a href="{% url 'modify_critique' critique.id %}" class="btn-active btn-base">Modifier</a>
+            <form method="post" action="{% url 'my_posts' %}" class="btn-active btn-base delete-form">
+                {% csrf_token %}
+                <input type="hidden" name="delete_critique_id" value="{{ critique.id }}">
+                <button type="submit" class="delete-btn">Supprimer</button>
+            </form>
+        </div>
+    {% endif %}
+</div>
+<link rel="stylesheet" href="{% static 'ticket_critique_detail.css' %}">
+{% endblock %}
+
