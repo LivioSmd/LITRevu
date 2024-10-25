@@ -1,5 +1,5 @@
 # LITRevu
-Web application for sharing book reviews and ratings 
+Web application for sharing book reviews and ratings (Pyhton/Django)
 
 
 ## Création d'un Environnement Local
@@ -29,4 +29,20 @@ python manage.py runserver
 ```
 http://127.0.0.1:8000/
 ```
+
+## Utilisation de l'application :
+### L’application permet de :
+- S’inscrire ;
+- Se connecter.
+- Demander des critiques de livres ou d’articles.
+- Lire des critiques de livres ou d’articles.
+- Publier des critiques de livres ou d’articles.
+- Voir, modifier et supprimer ses propres billets et critiques ;
+- S'abonner et se désabonner d'autres utilisateurs.
+
+## Information complémentaire :
+- Le corps de l'application ce situe dans le dossier App
+- Le dossier [migrations] contient l'historique des migrations
+- Le dossier [static] contient le dossier de stockage des images ainsi que toutes les files CSS
+- Le dossier [templates] contient tous les dossiers des files html
 
