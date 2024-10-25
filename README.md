@@ -43,7 +43,7 @@ http://127.0.0.1:8000/
 - ### Utilisation de l'application :
 L'Utilisateur peut s'inscrire/se connecter, voir ses postes depuis la page 'posts', voir ses postes et les postes des utilisateurs qu'il suit ou qui ont repondu à ses billets depuis la page 'flux', il peut gérer ses abonnements depuis la page 'abonnement', il peut aussi modifier ses billets et critiques.
 
-## Information complémentaire :
+## Informations complémentaires :
 - Le corps de l'application ce situe dans le dossier App
 - Le dossier [migrations] contient l'historique des migrations
 - Le dossier [static] contient le dossier de stockage des images ainsi que toutes les files CSS
