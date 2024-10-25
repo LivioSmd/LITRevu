@@ -46,6 +46,6 @@ L'Utilisateur peut s'inscrire/se connecter, voir ses postes depuis la page 'post
 ## Informations complémentaires :
 - Le corps de l'application ce situe dans le dossier App
 - Le dossier [migrations] contient l'historique des migrations
-- Le dossier [static] contient le dossier de stockage des images ainsi que toutes les files CSS
-- Le dossier [templates] contient tous les dossiers des files html
+- Le dossier [static] contient le dossier de stockage des images ainsi que tous les fichiers CSS
+- Le dossier [templates] contient tous les dossiers des fichers html
 
