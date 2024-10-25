@@ -37,8 +37,11 @@ http://127.0.0.1:8000/
 - Demander des critiques de livres ou d’articles.
 - Lire des critiques de livres ou d’articles.
 - Publier des critiques de livres ou d’articles.
-- Voir, modifier et supprimer ses propres billets et critiques ;
+- Voir, modifier et supprimer ses propres billets et critiques.
 - S'abonner et se désabonner d'autres utilisateurs.
+
+- ### Utilisation de l'application :
+L'Utilisateur peut s'inscrire/se connecter, voir ces postes depuis ça page 'poste', voir ses potes et les postes des utilisateurs qu'ils suit ou qui ont repondu a ses billets depuis la page flux, il peut gerer ses abonnement depuis sa page 'abonnement', il peut aussi modifier ses billets et critiques.
 
 ## Information complémentaire :
 - Le corps de l'application ce situe dans le dossier App
