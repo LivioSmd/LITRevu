@@ -60,44 +60,39 @@ def register(request):
 def flux(request):
     profile = request.user.profile
 
-    # Récup les utilisateurs suivis par l'utilisateur co
+    # Retrieve users followed of logged-in user
     followed_users = profile.subscriptions.all()
 
-    # Récup les profils des utilisateurs suivis
-    # .exclude(id=profile.id) permet de le pas avoir de doublon si jamais l'utilisateur se suit lui même
+    # Retrieve profiles followed of logged-in user
+    # .exclude(id=profile.id) avoids duplicates if the user follows him/herself
     followed_profiles = Profile.objects.filter(user__in=followed_users).exclude(id=profile.id)
 
-    # Récupérer les tickets des utilisateurs suivis
+    # Retrieve tickets from followed
     followed_users_tickets = Ticket.objects.filter(user__in=followed_profiles)
 
-    # Récupérer les critiques des utilisateurs suivis
+    # Retrieve critiques from followed
     followed_users_critique = Critique.objects.filter(user__in=followed_profiles)
 
-    # Tickets et critiques de l'utilisateur co
+    # tickets & critiques from logged-in user
     my_tickets = Ticket.objects.filter(user=profile)
     my_critiques = Critique.objects.filter(user=profile)
 
-    # Critiques en réponse aux billets de l'utilisateur connecté, sans inclure ses propres critiques
+    # critiques in response to the logged-in user's posts, not including his/her own reviews
     critiques_on_my_tickets = Critique.objects.filter(ticket__user=profile).exclude(user=profile)
 
-    # Annoter chaque queryset pour distinguer tickets / critiques
+    # Annotate each queryset to distinguish between tickets and critiques
     followed_users_tickets = followed_users_tickets.annotate(content_type=Value('TICKET', CharField()))
     my_tickets = my_tickets.annotate(content_type=Value('TICKET', CharField()))
     followed_users_critique = followed_users_critique.annotate(content_type=Value('CRITIQUE', CharField()))
     my_critiques = my_critiques.annotate(content_type=Value('CRITIQUE', CharField()))
     critiques_on_my_tickets = critiques_on_my_tickets.annotate(content_type=Value('CRITIQUE', CharField()))
 
-    # Combiner et trier les billets et critiques
+    # Combine and sort posts and reviews
     posts = sorted(
         chain(followed_users_tickets, followed_users_critique, my_tickets, my_critiques, critiques_on_my_tickets),
         key=lambda post: post.time_created,
         reverse=True
     )
-    print(followed_users_tickets)
-    print(followed_users_critique)
-    print(my_tickets)
-    print(my_critiques)
-    print(critiques_on_my_tickets)
 
     return render(request, '../templates/flux/flux.html', context={'posts': posts})
 
@@ -106,7 +101,7 @@ def subscription(request):
     search_users = None
     profile = request.user.profile
 
-    if request.method == 'GET' and request.GET:  # Vérifier s'il y a des paramètres GET car utilisation automatique de la methode GET à la génération de la page
+    if request.method == 'GET' and request.GET:  # Check for GET parameters, because the GET method is automatically used when the page is generated.
         form_search = UserSearchForm(request.GET)
         if form_search.is_valid():
             username = form_search.cleaned_data['username']
@@ -132,10 +127,10 @@ def create_ticket(request):
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
-            ticket = form.save(commit=False)  # Ne sauvegarde pas encore dans la base de données
-            ticket.user_id = request.user.profile.id  # Récupère l'ID du profil de l'utilisateur actuel
-            ticket.save()  # Maintenant sauvegarde le ticket
-            messages.success(request, 'Votre ticket a été envoyé avec succès !')  # Message de succès
+            ticket = form.save(commit=False)  # Not yet saved in database
+            ticket.user_id = request.user.profile.id  # Retrieves the profile ID of the current user
+            ticket.save()  # Now save the ticket
+            messages.success(request, 'Votre ticket a été envoyé avec succès !')  # Success message
             return redirect('create_ticket')
     else:
         form = TicketForm()
@@ -172,18 +167,18 @@ def my_posts(request):
     profile = request.user.profile
 
     if request.method == 'POST':
-        ticket_id = request.POST.get('delete_ticket_id')  # Récupère l'id du ticket via le champ du formulaire
+        ticket_id = request.POST.get('delete_ticket_id')  # Retrieves ticket id via form field
         critique_id = request.POST.get('delete_critique_id')
 
         if ticket_id:
-            ticket_to_delete = get_object_or_404(Ticket, id=ticket_id, user=profile)  # Récupère le ticket en db
-            ticket_to_delete.delete()  # Supprime le ticket en db
+            ticket_to_delete = get_object_or_404(Ticket, id=ticket_id, user=profile)  # Recovers ticket in db
+            ticket_to_delete.delete()  # Delete ticket in db
 
         if critique_id:
             critique_to_delete = get_object_or_404(Critique, id=critique_id, user=profile)
-            critique_to_delete.delete()  # Supprime la critique en db
+            critique_to_delete.delete()  # Delete critique in db
 
-    # Récupérer à nouveau les tickets et critiques après une éventuelle suppression
+    # Recover tickets and reviews after deletion
     my_tickets = Ticket.objects.filter(user=profile)
     my_critiques = Critique.objects.filter(user=profile)
 
@@ -196,8 +191,7 @@ def my_posts(request):
 @login_required
 def modify_ticket(request, ticket_id):
     profile = request.user.profile
-    ticket = get_object_or_404(Ticket, id=ticket_id,
-                               user=profile)  # Assure que l'utilisateur modifie seulement ses propres tickets_img
+    ticket = get_object_or_404(Ticket, id=ticket_id, user=profile)
 
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES, instance=ticket)

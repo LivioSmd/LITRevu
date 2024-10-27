@@ -15,6 +15,4 @@ urlpatterns = [
     path("modify_critique/<int:critique_id>/", views.modify_critique, name="modify_critique"),
 ]
 
-# TODO ReadmeReadme
-# TODO ajouter des tickets / critique
 

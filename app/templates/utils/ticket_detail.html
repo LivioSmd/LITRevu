@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block content %}
-<div class="ticket-detail {% if first %}first-of-list{% endif %}"> <!-- réutilisation de Fisrt pour générer le border-top -->
+<div class="ticket-detail {% if first %}first-of-list{% endif %}">  <!-- reuse of First to generate border-top -->
     {% if user.profile == ticket.user %}
         <h5 class="ticket-text">Ticket - Vous</h5>
     {% else %}

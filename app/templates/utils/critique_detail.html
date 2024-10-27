@@ -2,7 +2,7 @@
 {% load star_tags %}
 
 {% block content %}
-<div class="critique-detail {% if first %}first-of-list{% endif %}"> <!-- réutilisation de Fisrt pour générer le border-top -->
+<div class="critique-detail {% if first %}first-of-list{% endif %}"> <!-- reuse of First to generate border-top -->
     {% if user.profile == critique.user %}
         <h5 class="critique-text">Vous avez publié une critique</h5>
     {% else %}

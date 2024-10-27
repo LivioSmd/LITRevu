@@ -12,11 +12,11 @@ class Profile(models.Model):
         return f'{self.user.username}'
 
     def get_subscriptions(self):
-        """Retourne la liste des utilisateurs que cet utilisateur suit"""
+        """Returns the list of users this user is following"""
         return self.subscriptions.all()
 
     def get_subscribers(self):
-        """Retourne la liste des utilisateurs qui suivent cet utilisateur"""
+        """Returns a list of users following this user"""
         return self.user.subscribers.all()
 
 

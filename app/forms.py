@@ -17,15 +17,13 @@ class UserSearchForm(forms.Form):
 
 
 class TicketForm(forms.ModelForm):
-
     class Meta:
         model = Ticket
         fields = ['title', 'description', 'image']
 
 
-
 class CritiqueForm(forms.ModelForm):
-    NOTE_CHOICES = [(i, str(i)) for i in range(6)]  # Choix de 0 à 5
+    NOTE_CHOICES = [(i, str(i)) for i in range(6)]  # Choice from 0 to 5
 
     note = forms.ChoiceField(
         choices=NOTE_CHOICES,
