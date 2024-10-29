@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import PositiveSmallIntegerField
+import os
 
 
 class Profile(models.Model):
@@ -45,6 +46,13 @@ class Ticket(models.Model):
     user = models.ForeignKey('Profile', on_delete=models.CASCADE)
     image = models.ImageField(null=True, blank=True, upload_to='static/tickets_img')
     time_created = models.DateTimeField(auto_now_add=True)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            # Delete file system image
+            if os.path.isfile(self.image.path):
+                os.remove(self.image.path)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         """Returns the title of the ticket as its string representation."""
