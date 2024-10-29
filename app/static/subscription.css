@@ -76,10 +76,10 @@
 }
 
 .search_button {
-  height: 28px;
-  width: 13%;
-  border-radius: 7px;
-  cursor: pointer;
+    height: 28px;
+    width: 25%;
+    border-radius: 7px;
+    cursor: pointer;
 }
 
 .unsubscribe_form{

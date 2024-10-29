@@ -3,7 +3,6 @@ from django.db.models import CharField, Value
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -13,6 +12,16 @@ from .models import Ticket, Critique, Profile
 
 
 def login_user(request):
+    """
+    Method for user login.
+    Redirects to 'flux' if authenticated
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Else returns:
+        Redirects to 'login' or renders the 'login'.
+    """
     if request.user.is_authenticated:
         return redirect('flux')
     if request.method == "POST":
@@ -30,11 +39,30 @@ def login_user(request):
 
 
 def logout_user(request):
+    """
+    Method for user logout.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Redirects to 'login'
+    """
     logout(request)
     return redirect('login')
 
 
 def register(request):
+    """
+    Handle user registration.
+
+    Redirects to 'flux' if authenticated.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Else Returns:
+        Redirects to 'flux' or renders the registration page.
+    """
     if request.user.is_authenticated:
         return redirect('flux')
 
@@ -58,20 +86,26 @@ def register(request):
 
 @login_required
 def flux(request):
+    """
+    Display the activity feed for the logged-in user.
+
+    Retrieves tickets and critiques from followed users and the logged-in user,
+    Combines and sorts all entries by creation time.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        Renders the activity feed template with the combined posts.
+    """
     profile = request.user.profile
 
-    # Retrieve users followed of logged-in user
-    followed_users = profile.subscriptions.all()
-
+    followed_users = profile.subscriptions.all()  # Retrieve users followed of logged-in user
     # Retrieve profiles followed of logged-in user
     # .exclude(id=profile.id) avoids duplicates if the user follows him/herself
     followed_profiles = Profile.objects.filter(user__in=followed_users).exclude(id=profile.id)
-
-    # Retrieve tickets from followed
-    followed_users_tickets = Ticket.objects.filter(user__in=followed_profiles)
-
-    # Retrieve critiques from followed
-    followed_users_critique = Critique.objects.filter(user__in=followed_profiles)
+    followed_users_tickets = Ticket.objects.filter(user__in=followed_profiles)  # Retrieve tickets from followed
+    followed_users_critique = Critique.objects.filter(user__in=followed_profiles)  # Retrieve critiques from followed
 
     # tickets & critiques from logged-in user
     my_tickets = Ticket.objects.filter(user=profile)
@@ -89,19 +123,32 @@ def flux(request):
 
     # Combine and sort posts and reviews
     posts = sorted(
-        chain(followed_users_tickets, followed_users_critique, my_tickets, my_critiques, critiques_on_my_tickets),
+        chain(followed_users_tickets, followed_users_critique,
+              my_tickets, my_critiques, critiques_on_my_tickets),
         key=lambda post: post.time_created,
         reverse=True
     )
-
     return render(request, '../templates/flux/flux.html', context={'posts': posts})
+
 
 @login_required
 def subscription(request):
+    """
+    Manage user subscriptions and search for users.
+
+    Allows the logged-in user to search for other users to subscribe to or unsubscribe from.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        Renders the subscription template with the search form and results.
+    """
     search_users = None
     profile = request.user.profile
 
-    if request.method == 'GET' and request.GET:  # Check for GET parameters, because the GET method is automatically used when the page is generated.
+    # Check for GET parameters, because the GET method is automatically used when the page is generated.
+    if request.method == 'GET' and request.GET:
         form_search = UserSearchForm(request.GET)
         if form_search.is_valid():
             username = form_search.cleaned_data['username']
@@ -115,15 +162,26 @@ def subscription(request):
             user_to_subscribe = get_object_or_404(User, id=user_id)
 
             if user_to_subscribe in profile.subscriptions.all():
-                profile.subscriptions.remove(user_to_subscribe)  # Désabonnement
+                profile.subscriptions.remove(user_to_subscribe)  # unsubscribe
             else:
-                profile.subscriptions.add(user_to_subscribe)  # Abonnement
+                profile.subscriptions.add(user_to_subscribe)  # Subscription
     return render(request, '../templates/subscription/subscription.html',
                   {'form_search': form_search, 'search_users': search_users, 'user_profile': profile})
 
 
 @login_required
 def create_ticket(request):
+    """
+    Handle ticket creation.
+
+    On POST, validates and saves a new ticket associated with the logged-in user.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        Renders the ticket creation template.
+    """
     if request.method == 'POST':
         form = TicketForm(request.POST, request.FILES)
         if form.is_valid():
@@ -134,12 +192,22 @@ def create_ticket(request):
             return redirect('create_ticket')
     else:
         form = TicketForm()
-
     return render(request, '../templates/ticket/ticket.html', {'form': form})
 
 
 @login_required
 def create_ticket_critique(request):
+    """
+    Handle ticket and critique creation.
+
+    On POST, validates and saves both a new ticket and its associated critique for the logged-in user.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        Renders the ticket and critique creation template.
+    """
     if request.method == 'POST':
         ticket_form = TicketForm(request.POST, request.FILES)
         critique_form = CritiqueForm(request.POST, request.FILES)
@@ -164,24 +232,32 @@ def create_ticket_critique(request):
 
 @login_required
 def my_posts(request):
+    """
+    Display and manage the logged-in user's posts.
+
+    Handles deletion of tickets and critiques submitted by the user.
+    Retrieves the user's tickets and critiques after any deletions.
+
+    Args:
+        request (HttpRequest): The request object.
+
+    Returns:
+        Renders the user's posts template.
+    """
     profile = request.user.profile
 
     if request.method == 'POST':
         ticket_id = request.POST.get('delete_ticket_id')  # Retrieves ticket id via form field
         critique_id = request.POST.get('delete_critique_id')
-
         if ticket_id:
             ticket_to_delete = get_object_or_404(Ticket, id=ticket_id, user=profile)  # Recovers ticket in db
             ticket_to_delete.delete()  # Delete ticket in db
-
         if critique_id:
             critique_to_delete = get_object_or_404(Critique, id=critique_id, user=profile)
             critique_to_delete.delete()  # Delete critique in db
-
     # Recover tickets and reviews after deletion
     my_tickets = Ticket.objects.filter(user=profile)
     my_critiques = Critique.objects.filter(user=profile)
-
     return render(request, '../templates/my_posts/my_posts.html', {
         'my_tickets': my_tickets,
         'my_critiques': my_critiques,
@@ -190,6 +266,18 @@ def my_posts(request):
 
 @login_required
 def modify_ticket(request, ticket_id):
+    """
+    Modify an existing ticket.
+
+    Retrieves the ticket for the logged-in user and allows editing its details.
+
+    Args:
+        request (HttpRequest): The request object.
+        ticket_id: The ID of the ticket to modify.
+
+    Returns:
+        Renders the ticket modification template.
+    """
     profile = request.user.profile
     ticket = get_object_or_404(Ticket, id=ticket_id, user=profile)
 
@@ -200,7 +288,6 @@ def modify_ticket(request, ticket_id):
             return redirect('my_posts')
     else:
         form = TicketForm(instance=ticket)
-
     return render(request, '../templates/modify_ticket/modify_ticket.html', {
         'form': form, 'ticket': ticket
     })
@@ -208,6 +295,18 @@ def modify_ticket(request, ticket_id):
 
 @login_required
 def modify_critique(request, critique_id):
+    """
+    Modify an existing critique.
+
+    Retrieves the critique for the logged-in user and allows editing its details.
+
+    Args:
+        request (HttpRequest): The request object.
+        critique_id: The ID of the critique to modify.
+
+    Returns:
+        Renders the critique modification template.
+    """
     profile = request.user.profile
     critique = get_object_or_404(Critique, id=critique_id, user=profile)
     ticket = get_object_or_404(Ticket, id=critique.ticket.id)
@@ -219,7 +318,6 @@ def modify_critique(request, critique_id):
             return redirect('my_posts')
     else:
         form = CritiqueForm(instance=critique)
-
     return render(request, '../templates/modify_critique/modify_critique.html', {
         'form': form,
         'critique': critique,
@@ -229,6 +327,18 @@ def modify_critique(request, critique_id):
 
 @login_required
 def create_critique(request, ticket_id):
+    """
+    Create a critique for a specified ticket.
+
+    On POST, saves the critique associated with the ticket if the form is valid.
+
+    Args:
+        request (HttpRequest): The request object.
+        ticket_id: The ID of the ticket for which the critique is created.
+
+    Returns:
+        Renders the critique creation template.
+    """
     ticket = get_object_or_404(Ticket, id=ticket_id)
 
     if request.method == 'POST':
