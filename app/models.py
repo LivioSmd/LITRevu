@@ -48,6 +48,7 @@ class Ticket(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     def delete(self, *args, **kwargs):
+        """Delete the instance and its associated image file, if it exists"""
         if self.image:
             # Delete file system image
             if os.path.isfile(self.image.path):

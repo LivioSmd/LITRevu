@@ -20,6 +20,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 @receiver(post_delete, sender=Ticket)
 def delete_ticket_image(sender, instance, **kwargs):
+    """Delete the ticket image file after the Ticket instance is deleted"""
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
